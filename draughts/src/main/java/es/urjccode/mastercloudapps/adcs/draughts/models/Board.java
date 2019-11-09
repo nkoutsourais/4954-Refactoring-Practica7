@@ -6,6 +6,7 @@ import java.util.List;
 class Board {
 
     private static final int DIMENSION = 8;
+    private static final int DISTANCE_EAT = 2;
 
     private Square[][] squares;
 
@@ -35,7 +36,7 @@ class Board {
 
     void move(Coordinate origin, Coordinate target) {
         this.put(target, this.remove(origin));
-        if (origin.diagonalDistance(target) == 2) {
+        if (origin.diagonalDistance(target) == DISTANCE_EAT) {
 			Coordinate between = origin.betweenDiagonal(target);
 			this.remove(between);
 		}
@@ -94,7 +95,7 @@ class Board {
             if (piece == null) {
                 string += " ";
             } else {
-                final String[] letters = {"b","n"};
+                final String[] letters = {"b", "n"};
                 string += letters[piece.getColor().ordinal()];
             }
         }

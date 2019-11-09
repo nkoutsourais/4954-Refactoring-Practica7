@@ -2,6 +2,9 @@ package es.urjccode.mastercloudapps.adcs.draughts.models;
 
 class BoardInitialBuilder {
 
+	private static final int BLACK_LIMIT = 2;
+	private static final int WHITE_LIMIT = 5;
+
     private Board board;
 
     public BoardInitialBuilder() {
@@ -21,9 +24,9 @@ class BoardInitialBuilder {
 		if (coordinate.isBlack()) {
 			final int row = coordinate.getRow();
 			Color color = null;
-			if (row <= 2) {
+			if (row <= BLACK_LIMIT) {
 				color = Color.BLACK;
-			} else if (row >= 5) {
+			} else if (row >= WHITE_LIMIT) {
 				color = Color.WHITE;
 			}
 			if (color != null) {
