@@ -13,7 +13,7 @@ public class ErrorView {
 		"Error!!! No está vacío el destino",
         "Error!!! No avanzas", 
         "Error!!! No comes contrarias",
-        "Error!!! No te entiendo: <d><d>{,<d><d>}[0-2]"
+        "Error!!! No te entiendo: <d><d>{.<d><d>}[0-2]"
     };
 
 	public static String getMessage(Error error) {

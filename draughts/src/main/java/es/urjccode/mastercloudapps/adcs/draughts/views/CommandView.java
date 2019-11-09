@@ -11,13 +11,11 @@ public class CommandView extends SubView {
     }
 
     public void interact(PlayController playController) {
-        Error error = null;
         GameView gameView = new GameView();
+        Error error = null;
         do {
-            String command = this.console.readString(MessageView.TURN.getMessage() + ColorView.getMessage(playController.getColor()) + ": ");
-            int origin = Integer.parseInt(command.substring(0, 2));
-            int target = Integer.parseInt(command.substring(3, 5));
-            error = playController.move(new Coordinate(origin / 10 - 1, origin % 10 - 1), new Coordinate(target / 10 - 1, target % 10 - 1));
+            Coordinate[] coordinates = getCoordinates(playController);
+            error = playController.move(coordinates[0], coordinates[1]);
             if (error != null) {
                 console.writeln(ErrorView.getMessage(error));
             }
@@ -26,5 +24,36 @@ public class CommandView extends SubView {
         if (playController.isBlocked()) {
             this.console.write(MessageView.FINAL.getMessage());
         }
+    }
+
+    private Coordinate[] getCoordinates(PlayController playController) {
+        Error error;
+        Coordinate[] coordinates = null;
+        do {
+            error = null;
+            String title = MessageView.TURN.getMessage() + ColorView.getMessage(playController.getColor()) + ": ";
+            try {
+                String command = this.console.readString(title);
+                coordinates = getCoordinates(command);
+                if (!coordinates[0].isValid() || !coordinates[1].isValid()) {
+                    error = Error.OUT_COORDINATE;
+                }
+            } catch (Exception ex) {
+                error = Error.INCORRECT_COMMAND;
+            }
+            if (error != null) {
+                console.writeln(ErrorView.getMessage(error));
+            }
+        } while (error != null);
+        return coordinates;
+    }
+
+    private Coordinate[] getCoordinates(String command) {
+        String[] positions = command.trim().split("\\.");
+        int originPos = Integer.parseInt(positions[0]);
+        int targetPos = Integer.parseInt(positions[1]);
+        Coordinate origin = new Coordinate(originPos / 10 - 1, originPos % 10 - 1);
+        Coordinate target = new Coordinate(targetPos / 10 - 1, targetPos % 10 - 1);
+        return new Coordinate[] { origin, target };
     }
 }
