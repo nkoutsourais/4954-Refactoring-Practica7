@@ -1,7 +1,5 @@
 package es.urjccode.mastercloudapps.adcs.draughts.views;
 
-import java.lang.reflect.Method;
-
 import es.urjccode.mastercloudapps.adcs.draughts.controllers.Controller;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
 
@@ -11,11 +9,11 @@ public class GameView extends SubView {
         final int DIMENSION = controller.getDimension();
         this.writeNumbersLine(DIMENSION);
         for (int i = 0; i < DIMENSION; i++) {
-            writeAxis(i);
+            this.console.write(String.valueOf(i + 1));
             for (int j = 0; j < DIMENSION; j++) {
                 this.console.write(ColorView.getLetter(controller.getColor(new Coordinate(i, j))));
             }
-            writeAxis(i, true);
+            this.console.writeln(String.valueOf(i + 1));
         }
         this.writeNumbersLine(DIMENSION);
     }
@@ -23,21 +21,8 @@ public class GameView extends SubView {
     private void writeNumbersLine(final int DIMENSION) {
         this.console.write(" ");
         for (int i = 0; i < DIMENSION; i++) {
-            writeAxis(i);
+            this.console.write(String.valueOf(i + 1));
         }
         this.console.writeln();
-    }
-
-    private void writeAxis(int position) {
-        writeAxis(position, false);
-    }
-
-    private void writeAxis(int position, boolean lineBreak) {
-        try {
-            Method method = this.console.getClass().getMethod(lineBreak ? "writeln" : "write", new Class[] { String.class } );
-            method.invoke(this.console, (position + 1) + "");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
