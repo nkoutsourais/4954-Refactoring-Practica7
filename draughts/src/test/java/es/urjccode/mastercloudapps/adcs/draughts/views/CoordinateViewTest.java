@@ -1,5 +1,8 @@
 package es.urjccode.mastercloudapps.adcs.draughts.views;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,18 +19,20 @@ import org.mockito.junit.MockitoJUnitRunner;
 import es.urjccode.mastercloudapps.adcs.draughts.controllers.PlayController;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Color;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
+import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
+import es.urjccode.mastercloudapps.adcs.draughts.utils.Console;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CommandViewTest {
+public class CoordinateViewTest {
 
     @Mock
     PlayController playController;
 
     @Mock
-    CoordinateView CoordinateView;
+    Console console;
 
     @InjectMocks
-    CommandView commandView;
+    CoordinateView coordinateView;
 
     @Captor
     ArgumentCaptor<String> argument;
@@ -36,13 +41,16 @@ public class CommandViewTest {
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
-    
+
     @Test
-    public void testInteractMoveOk(){
-        Coordinate[] coordinates = new Coordinate[] { new Coordinate(2,1), new Coordinate(3, 0) };
+    public void testInteractErrorCommandAndOk(){
         when(playController.getColor()).thenReturn(Color.BLACK);
-        when(CoordinateView.getCoordinates(playController)).thenReturn(coordinates);
-        commandView.interact(playController);
-        verify(playController).move(coordinates[0], coordinates[1]);
+        when(console.readString(anyString()))
+            .thenReturn("Loquesea\n")
+            .thenReturn("32.41\n");
+        Coordinate[] coordinates = coordinateView.getCoordinates(playController);
+        verify(console).writeln(argument.capture());
+        assertEquals(ErrorView.getMessage(Error.INCORRECT_COMMAND), argument.getValue());
+        assertArrayEquals(new Coordinate[]{ new Coordinate(2, 1), new Coordinate(3, 0)}, coordinates);
     }
 }
