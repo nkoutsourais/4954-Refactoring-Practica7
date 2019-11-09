@@ -8,16 +8,7 @@ import es.urjccode.mastercloudapps.adcs.draughts.controllers.StartController;
 
 public class View implements ControllersVisitor {
 
-    private StartView startView;
-
-    private CommandView commandView;
-
-    private ResumeView resumeView;
-
     public View(){
-        this.startView = new StartView();
-        this.commandView = new CommandView();
-        this.resumeView = new ResumeView();
     }
 
     public void interact(Controller controller) {
@@ -26,17 +17,16 @@ public class View implements ControllersVisitor {
 
     @Override
     public void visit(StartController startController) {
-        this.startView.interact(startController);
+        new StartView().interact(startController);
     }
 
     @Override
     public void visit(PlayController playController) {
-        this.commandView.interact(playController);
+        new CommandView().interact(playController);
     }
 
     @Override
     public void visit(ResumeController resumeController) {
-        this.resumeView.interact(resumeController);
+        new ResumeView().interact(resumeController);
     }
-
 }

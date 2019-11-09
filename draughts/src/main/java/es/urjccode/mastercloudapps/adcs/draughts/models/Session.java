@@ -45,7 +45,4 @@ public class Session {
 	public int getDimension() {
 		return this.game.getDimension();
 	}
-
-	
-
 }

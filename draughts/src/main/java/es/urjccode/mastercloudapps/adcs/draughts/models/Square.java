@@ -26,10 +26,6 @@ class Square {
 	}
 
 	public Color getColor() {
-        if (piece == null){
-            return null;
-        }
-		return this.piece.getColor();
+		return isEmpty() ? null : this.piece.getColor();
 	}
-
 }
