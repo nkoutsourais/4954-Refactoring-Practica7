@@ -7,6 +7,8 @@ import es.urjccode.mastercloudapps.adcs.draughts.models.Game;
 
 public class PieceChecker extends CheckerChain {
 
+    private static final int DISTANCE_DIAGONAL_FOR_EAT = 2;
+
     Game game;
 
     public PieceChecker(Game game) {
@@ -19,7 +21,7 @@ public class PieceChecker extends CheckerChain {
 		if (!piece.isAdvanced(origin, target)) {
 			return Error.NOT_ADVANCED;
         }
-        if (origin.diagonalDistance(target) == 2) {
+        if (origin.diagonalDistance(target) == DISTANCE_DIAGONAL_FOR_EAT) {
 			Coordinate between = origin.betweenDiagonal(target);
 			if (this.game.getPiece(between) == null) {
 				return Error.EATING_EMPTY;
