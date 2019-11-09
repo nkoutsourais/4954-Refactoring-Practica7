@@ -10,27 +10,29 @@ import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 
 public class CoordinatesCheckerTest {
 
+    CheckerChain checker;
+
+    public CoordinatesCheckerTest() {
+        checker = new CoordinatesChecker();
+    }
+
     @Test
     public void givenCoordinatesCheckerWhenCheckThenOutCoordinate() {
-        Checker checker = new CoordinatesChecker(new Coordinate(9, 1), new Coordinate(1, 2));
-        assertEquals(Error.OUT_COORDINATE, checker.check());
+        assertEquals(Error.OUT_COORDINATE, checker.check(new Coordinate(9, 1), new Coordinate(1, 2)));
     }
 
     @Test
     public void givenCoordinatesCheckerWhenCheckThenNotDiagonal() {
-        Checker checker = new CoordinatesChecker(new Coordinate(1, 0), new Coordinate(2, 0));
-        assertEquals(Error.NOT_DIAGONAL, checker.check());
+        assertEquals(Error.NOT_DIAGONAL, checker.check(new Coordinate(1, 0), new Coordinate(2, 0)));
     }
 
     @Test
     public void givenCoordinatesCheckerWhenCheckThenBadDistance() {
-        Checker checker = new CoordinatesChecker(new Coordinate(1, 1), new Coordinate(4, 4));
-        assertEquals(Error.BAD_DISTANCE, checker.check());
+        assertEquals(Error.BAD_DISTANCE, checker.check(new Coordinate(1, 1), new Coordinate(4, 4)));
     }
 
     @Test
     public void givenCoordinatesCheckerWhenCheckThenErrorNull() {
-        Checker checker = new CoordinatesChecker(new Coordinate(1, 1), new Coordinate(2, 2));
-        assertNull(checker.check());
+        assertNull(checker.check(new Coordinate(1, 1), new Coordinate(2, 2)));
     }
 }

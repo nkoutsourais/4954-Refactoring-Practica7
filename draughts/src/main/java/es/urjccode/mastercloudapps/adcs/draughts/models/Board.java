@@ -35,6 +35,10 @@ class Board {
 
     void move(Coordinate origin, Coordinate target) {
         this.put(target, this.remove(origin));
+        if (origin.diagonalDistance(target) == 2) {
+			Coordinate between = origin.betweenDiagonal(target);
+			this.remove(between);
+		}
     }
 
     Piece getPiece(Coordinate coordinate) {

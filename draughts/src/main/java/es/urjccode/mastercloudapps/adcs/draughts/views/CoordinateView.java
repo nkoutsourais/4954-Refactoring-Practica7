@@ -1,12 +1,18 @@
 package es.urjccode.mastercloudapps.adcs.draughts.views;
 
-import es.urjccode.mastercloudapps.adcs.draughts.checkers.Checker;
+import es.urjccode.mastercloudapps.adcs.draughts.checkers.CheckerChain;
 import es.urjccode.mastercloudapps.adcs.draughts.checkers.CoordinatesChecker;
 import es.urjccode.mastercloudapps.adcs.draughts.controllers.PlayController;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 
 class CoordinateView extends SubView {
+
+    CheckerChain coordinatesChecker;
+
+    public CoordinateView() {
+        coordinatesChecker = new CoordinatesChecker();
+    }
 
     public Coordinate[] getCoordinates(PlayController playController) {
         Error error;
@@ -16,8 +22,7 @@ class CoordinateView extends SubView {
             try {
                 String command = this.console.readString(title);
                 coordinates = getCoordinates(command);
-                Checker coordinatesChecker = new CoordinatesChecker(coordinates[0], coordinates[1]);
-                error = coordinatesChecker.check();
+                error = coordinatesChecker.check(coordinates[0], coordinates[1]);
             } catch (Exception ex) {
                 error = Error.INCORRECT_COMMAND;
             }

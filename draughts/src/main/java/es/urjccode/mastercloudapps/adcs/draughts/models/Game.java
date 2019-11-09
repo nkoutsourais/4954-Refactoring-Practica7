@@ -1,39 +1,29 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
+import es.urjccode.mastercloudapps.adcs.draughts.checkers.BoardChecker;
+import es.urjccode.mastercloudapps.adcs.draughts.checkers.CheckerChain;
+import es.urjccode.mastercloudapps.adcs.draughts.checkers.PieceChecker;
+
 public class Game {
 
 	private Board board;
 
 	private Turn turn;
 
+	private CheckerChain checker;
+
 	public Game() {
 		this.turn = new Turn();
 		this.board = new BoardInitialBuilder().getBoard();
+		this.checker = new BoardChecker(this);
+		this.checker.linkWith(new PieceChecker(this));
 	}
 
 	public Error move(Coordinate origin, Coordinate target) {
 		assert origin != null && target != null;
-		if (board.isEmpty(origin)) {
-			return Error.EMPTY_ORIGIN;
-		}
-		Color color = this.board.getColor(origin);
-		if (this.turn.getColor() != color) {
-			return Error.OPPOSITE_PIECE;
-		}
-		Piece piece = this.board.getPiece(origin);
-		if (!piece.isAdvanced(origin, target)) {
-			return Error.NOT_ADVANCED;
-		}
-		if (!this.board.isEmpty(target)) {
-			return Error.NOT_EMPTY_TARGET;
-		}
-		if (origin.diagonalDistance(target) == 2) {
-			Coordinate between = origin.betweenDiagonal(target);
-			if (this.board.getPiece(between) == null) {
-				return Error.EATING_EMPTY;
-			}
-			this.board.remove(between);
-		}
+		Error error = this.checker.check(origin, target);
+		if(error != null)
+			return error;
 		this.board.move(origin, target);
 		this.turn.change();
 		return null;
@@ -63,4 +53,8 @@ public class Game {
 	public int getDimension() {
 		return this.board.getDimension();
 	}
+
+	public boolean isEmpty(Coordinate coordinate) {
+        return this.board.isEmpty(coordinate);
+    }
 }

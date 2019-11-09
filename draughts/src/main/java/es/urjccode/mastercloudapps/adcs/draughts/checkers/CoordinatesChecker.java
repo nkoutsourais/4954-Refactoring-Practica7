@@ -3,27 +3,20 @@ package es.urjccode.mastercloudapps.adcs.draughts.checkers;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 
-public class CoordinatesChecker implements Checker {
-
-    private final Coordinate origin;
-    private final Coordinate target;
-
-    public CoordinatesChecker(Coordinate origin, Coordinate target) {
-        assert origin != null && target != null;
-        this.origin = origin;
-        this.target = target;
-    }
+public class CoordinatesChecker extends CheckerChain {
 
     @Override
-    public Error check() {
-        Error error = null;
+    public Error check(Coordinate origin, Coordinate target) {
+        assert origin != null && target != null;
         if (!origin.isValid() || !target.isValid()) {
-            error = Error.OUT_COORDINATE;
-        } else if (!origin.isDiagonal(target)) {
-            error = Error.NOT_DIAGONAL;
-        } else if (origin.diagonalDistance(target) >= 3) {
-            error = Error.BAD_DISTANCE;
+            return Error.OUT_COORDINATE;
         }
-        return error;
+        if (!origin.isDiagonal(target)) {
+            return Error.NOT_DIAGONAL;
+        }
+        if (origin.diagonalDistance(target) >= 3) {
+            return Error.BAD_DISTANCE;
+        }
+        return checkNext(origin, target);
     }
 }
