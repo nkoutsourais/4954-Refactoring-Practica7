@@ -5,11 +5,11 @@ import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Game;
 
-public class BoardChecker extends CheckerChain {
+class BoardChecker extends CheckerChain {
 
     Game game;
 
-    public BoardChecker(Game game) {
+    BoardChecker(Game game) {
         this.game = game;
     }
 

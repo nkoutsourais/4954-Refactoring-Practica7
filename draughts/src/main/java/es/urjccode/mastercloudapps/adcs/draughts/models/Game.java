@@ -1,8 +1,7 @@
 package es.urjccode.mastercloudapps.adcs.draughts.models;
 
-import es.urjccode.mastercloudapps.adcs.draughts.checkers.BoardChecker;
 import es.urjccode.mastercloudapps.adcs.draughts.checkers.CheckerChain;
-import es.urjccode.mastercloudapps.adcs.draughts.checkers.PieceChecker;
+import es.urjccode.mastercloudapps.adcs.draughts.checkers.GameValidator;
 
 public class Game {
 
@@ -15,8 +14,7 @@ public class Game {
 	public Game() {
 		this.turn = new Turn();
 		this.board = new BoardInitialBuilder().getBoard();
-		this.checker = new BoardChecker(this);
-		this.checker.linkWith(new PieceChecker(this));
+		this.checker = GameValidator.getChecker(this);
 	}
 
 	public Error move(Coordinate origin, Coordinate target) {

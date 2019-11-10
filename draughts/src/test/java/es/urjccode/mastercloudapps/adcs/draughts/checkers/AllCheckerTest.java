@@ -5,6 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
-    CoordinatesCheckerTest.class } )
+    CoordinatesCheckerTest.class,
+    BoardCheckerTest.class,
+    PieceCheckerTest.class } )
 public final class AllCheckerTest {
 }
