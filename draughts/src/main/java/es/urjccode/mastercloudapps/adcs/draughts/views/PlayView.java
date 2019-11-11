@@ -4,11 +4,11 @@ import es.urjccode.mastercloudapps.adcs.draughts.controllers.PlayController;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Error;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
 
-public class CommandView extends SubView {
+public class PlayView extends SubView {
 
     CoordinateView coordinateView;
 
-    public CommandView() {
+    public PlayView() {
         super();
         coordinateView = new CoordinateView();
     }

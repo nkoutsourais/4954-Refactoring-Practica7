@@ -18,7 +18,7 @@ import es.urjccode.mastercloudapps.adcs.draughts.models.Color;
 import es.urjccode.mastercloudapps.adcs.draughts.models.Coordinate;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CommandViewTest {
+public class PlayViewTest {
 
     @Mock
     PlayController playController;
@@ -27,7 +27,7 @@ public class CommandViewTest {
     CoordinateView CoordinateView;
 
     @InjectMocks
-    CommandView commandView;
+    PlayView playView;
 
     @Captor
     ArgumentCaptor<String> argument;
@@ -42,7 +42,7 @@ public class CommandViewTest {
         Coordinate[] coordinates = new Coordinate[] { new Coordinate(2,1), new Coordinate(3, 0) };
         when(playController.getColor()).thenReturn(Color.BLACK);
         when(CoordinateView.getCoordinates(playController)).thenReturn(coordinates);
-        commandView.interact(playController);
+        playView.interact(playController);
         verify(playController).move(coordinates[0], coordinates[1]);
     }
 }

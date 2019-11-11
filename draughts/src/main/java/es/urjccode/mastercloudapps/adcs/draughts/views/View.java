@@ -22,7 +22,7 @@ public class View implements ControllersVisitor {
 
     @Override
     public void visit(PlayController playController) {
-        new CommandView().interact(playController);
+        new PlayView().interact(playController);
     }
 
     @Override
