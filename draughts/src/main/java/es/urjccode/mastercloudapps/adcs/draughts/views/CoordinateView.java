@@ -35,10 +35,11 @@ class CoordinateView extends SubView {
 
     private Coordinate[] getCoordinates(String command) {
         String[] positions = command.trim().split("\\.");
-        int originPos = Integer.parseInt(positions[0]);
-        int targetPos = Integer.parseInt(positions[1]);
-        Coordinate origin = new Coordinate(originPos / 10 - 1, originPos % 10 - 1);
-        Coordinate target = new Coordinate(targetPos / 10 - 1, targetPos % 10 - 1);
-        return new Coordinate[] { origin, target };
+        return new Coordinate[] { getCoordinate(positions[0]), getCoordinate(positions[1]) };
+    }
+
+    private Coordinate getCoordinate(String command) {
+        int position = Integer.parseInt(command);
+        return new Coordinate(position / 10 - 1, position % 10 - 1);
     }
 }
